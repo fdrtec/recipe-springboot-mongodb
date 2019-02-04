@@ -41,7 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public List<Recipe> listByIngredient(String ingredient) {
-		return null;
+		return recipeRepository.findAllByIngredientsEquals(ingredient);
 	}
 
 	@Override

@@ -29,8 +29,9 @@ public class RecipeController {
 		return service.get(id);
 	}
 
-	public List<Recipe> listByIngredient() {
-		return service.listByIngredient(null);
+	@GetMapping("/recipe/ingredient")
+	public List<Recipe> listByIngredient(@RequestParam("ingredient") String ingredient) {
+		return service.listByIngredient(ingredient);
 	}
 
 	public List<Recipe> search() {
@@ -44,6 +45,7 @@ public class RecipeController {
 	public void unlike() {
 		service.unlike(null, null);
 	}
+
 
 	public RecipeComment addComment() {
 		return service.addComment(null, null);
