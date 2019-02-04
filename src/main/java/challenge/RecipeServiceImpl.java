@@ -24,7 +24,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public void delete(String id) {
-
+		recipeRepository.deleteById(id);
 	}
 
 	@Override

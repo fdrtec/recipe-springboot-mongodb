@@ -19,8 +19,9 @@ public class RecipeController {
 		service.update(null, null);
 	}
 
-	public void delete() {
-		service.delete(null);
+	@DeleteMapping("/recipe/{id}")
+	public void delete(@PathVariable String id) {
+		service.delete(id);
 	}
 
 	@GetMapping("/recipe/{id}")
