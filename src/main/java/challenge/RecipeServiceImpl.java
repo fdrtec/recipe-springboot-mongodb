@@ -12,8 +12,15 @@ public class RecipeServiceImpl implements RecipeService {
 	@Autowired
 	private RecipeRepository recipeRepository;
 
+	@Autowired
+	private CommentRepository commentRepository;
+
 	@Override
 	public Recipe save(Recipe recipe) {
+
+		if (recipe.getComments().size() > 0)
+			commentRepository.saveAll(recipe.getComments());
+
 		return recipeRepository.save(recipe);
 	}
 
