@@ -26,7 +26,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public void update(String id, Recipe recipe) {
-
+		
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public List<Recipe> listByIngredient(String ingredient) {
-		return recipeRepository.findAllByIngredientsEquals(ingredient);
+		return recipeRepository.findAllByIngredientsEqualsOrderByTitleAsc(ingredient);
 	}
 
 	@Override

@@ -15,8 +15,9 @@ public class RecipeController {
 		return service.save(recipe);
 	}
 
-	public void update() {
-		service.update(null, null);
+	@PutMapping("/recipe/{id}")
+	public void update(@PathVariable("id") String id, @RequestBody Recipe recipe) {
+		service.update(id, recipe);
 	}
 
 	@DeleteMapping("/recipe/{id}")

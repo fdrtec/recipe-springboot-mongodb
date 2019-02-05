@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends MongoRepository<Recipe, String> {
 
-	List<Recipe> findAllByIngredientsEquals(String ingredients);
+	List<Recipe> findAllByIngredientsEqualsOrderByTitleAsc(String ingredients);
 
 }
