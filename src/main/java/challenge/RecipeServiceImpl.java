@@ -1,6 +1,7 @@
 package challenge;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,18 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public void update(String id, Recipe recipe) {
-		
+
+		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+
+		if (recipeAlreadyExists.isPresent()) {
+
+			Recipe updatedRecipe = recipeAlreadyExists.get();
+			updatedRecipe.setTitle(recipe.getTitle());
+			updatedRecipe.setDescription(recipe.getDescription());
+			updatedRecipe.setIngredients(recipe.getIngredients());
+
+			recipeRepository.save(updatedRecipe);
+		}
 	}
 
 	@Override
