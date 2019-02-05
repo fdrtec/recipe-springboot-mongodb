@@ -76,7 +76,15 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public void unlike(String id, String userId) {
+		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
+		if (recipeAlreadyExists.isPresent()) {
+
+			Recipe recipe = recipeAlreadyExists.get();
+			recipe.deleteIngredient(userId);
+
+			recipeRepository.save(recipeAlreadyExists.get());
+		}
 	}
 
 	@Override

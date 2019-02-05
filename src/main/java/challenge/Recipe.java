@@ -87,4 +87,8 @@ public class Recipe {
 		if (userId != null)
 			this.likes.add(userId);
 	}
+
+	public void deleteIngredient(String userId) {
+		this.likes.remove(userId);
+	}
 }
