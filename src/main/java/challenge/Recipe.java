@@ -82,4 +82,9 @@ public class Recipe {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
+	public void addIngredient(String userId) {
+		if (userId != null)
+			this.likes.add(userId);
+	}
 }

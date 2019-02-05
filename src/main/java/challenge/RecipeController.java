@@ -35,16 +35,19 @@ public class RecipeController {
 		return service.listByIngredient(ingredient);
 	}
 
-	public List<Recipe> search() {
-		return service.search(null);
+	@GetMapping("/recipe/search")
+	public List<Recipe> search(@RequestParam("search") String search) {
+		return service.search(search);
 	}
 
-	public void like() {
-		service.like(null, null);
+	@PostMapping("/recipe/{id}/like/{userId}")
+	public void like(@PathVariable("id") String id, @PathVariable("userId") String userId) {
+		service.like(id, userId);
 	}
 
-	public void unlike() {
-		service.unlike(null, null);
+	@DeleteMapping("/recipe/{id}/like/{userId}")
+	public void unlike(@PathVariable("id") String id, @PathVariable("userId") String userId) {
+		service.unlike(id, userId);
 	}
 
 

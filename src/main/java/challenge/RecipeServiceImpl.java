@@ -58,12 +58,20 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public List<Recipe> search(String search) {
-		return null;
+		return recipeRepository.findAllByTitleContainsOrDescriptionContainsOrderByTitleAsc(search);
 	}
 
 	@Override
 	public void like(String id, String userId) {
+		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
+		if (recipeAlreadyExists.isPresent()) {
+
+			Recipe recipe = recipeAlreadyExists.get();
+			recipe.addIngredient(userId);
+
+			recipeRepository.save(recipeAlreadyExists.get());
+		}
 	}
 
 	@Override

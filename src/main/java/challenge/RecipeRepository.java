@@ -10,4 +10,6 @@ public interface RecipeRepository extends MongoRepository<Recipe, String> {
 
 	List<Recipe> findAllByIngredientsEqualsOrderByTitleAsc(String ingredients);
 
+	List<Recipe> findAllByTitleContainsOrDescriptionContainsOrderByTitleAsc(String search);
+
 }
