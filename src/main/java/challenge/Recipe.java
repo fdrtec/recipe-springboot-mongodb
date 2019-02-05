@@ -22,12 +22,12 @@ public class Recipe {
 	private String description;
 	private List<String> likes;
 	private List<String> ingredients;
-	private RecipeComment comments;
+	private List<RecipeComment> comments;
 
 	public Recipe() {
 	}
 
-	public Recipe(String id, String title, String description, List<String> likes, List<String> ingredients, RecipeComment comments) {
+	public Recipe(String id, String title, String description, List<String> likes, List<String> ingredients, List<RecipeComment> comments) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -76,11 +76,11 @@ public class Recipe {
 		this.ingredients = ingredients;
 	}
 
-	public RecipeComment getRecipeComments() {
+	public List<RecipeComment> getComments() {
 		return comments;
 	}
 
-	public void setComments(RecipeComment comments) {
+	public void setComments(List<RecipeComment> comments) {
 		this.comments = comments;
 	}
 
@@ -93,4 +93,10 @@ public class Recipe {
 		if (Strings.isNotEmpty(userId))
 			this.likes.remove(userId);
 	}
+
+	public void addComment(RecipeComment comment) {
+
+	    if (comment != null)
+	        this.comments.add(comment);
+    }
 }

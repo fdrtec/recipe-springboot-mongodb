@@ -18,8 +18,8 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public Recipe save(Recipe recipe) {
 
-		if (recipe.getRecipeComments().size() > 0)
-			commentRepository.saveAll(recipe.getRecipeComments());
+		if (recipe.getComments().size() > 0)
+			commentRepository.saveAll(recipe.getComments());
 
 		return recipeRepository.save(recipe);
 	}
@@ -93,11 +93,13 @@ public class RecipeServiceImpl implements RecipeService {
 		if (!recipeAlreadyExists.isPresent())
 			return null;
 
-		RecipeComment save = commentRepository.save(comment);
+		RecipeComment savedComment = commentRepository.save(comment);
 
+		recipeAlreadyExists.get().addComment(savedComment);
 
-
-
+		recipeRepository.save(recipeAlreadyExists.get());
+		
+		return savedComment;
 	}
 
 	@Override
