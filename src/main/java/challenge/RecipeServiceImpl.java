@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -19,8 +18,8 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public Recipe save(Recipe recipe) {
 
-		if (recipe.getComments().size() > 0)
-			commentRepository.saveAll(recipe.getComments());
+		if (recipe.getRecipeComments().size() > 0)
+			commentRepository.saveAll(recipe.getRecipeComments());
 
 		return recipeRepository.save(recipe);
 	}
@@ -89,7 +88,16 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public RecipeComment addComment(String id, RecipeComment comment) {
-		return null;
+		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+
+		if (!recipeAlreadyExists.isPresent())
+			return null;
+
+		RecipeComment save = commentRepository.save(comment);
+
+
+
+
 	}
 
 	@Override

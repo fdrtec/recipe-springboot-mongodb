@@ -22,12 +22,12 @@ public class Recipe {
 	private String description;
 	private List<String> likes;
 	private List<String> ingredients;
-	private List<Comment> comments;
+	private RecipeComment comments;
 
 	public Recipe() {
 	}
 
-	public Recipe(String id, String title, String description, List<String> likes, List<String> ingredients, List<Comment> comments) {
+	public Recipe(String id, String title, String description, List<String> likes, List<String> ingredients, RecipeComment comments) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -76,11 +76,11 @@ public class Recipe {
 		this.ingredients = ingredients;
 	}
 
-	public List<Comment> getComments() {
+	public RecipeComment getRecipeComments() {
 		return comments;
 	}
 
-	public void setComments(List<Comment> comments) {
+	public void setComments(RecipeComment comments) {
 		this.comments = comments;
 	}
 

@@ -50,9 +50,9 @@ public class RecipeController {
 		service.unlike(id, userId);
 	}
 
-
-	public RecipeComment addComment() {
-		return service.addComment(null, null);
+	@PostMapping("/recipe/{id}/comment")
+	public RecipeComment addComment(@PathVariable("id") String id, @RequestBody RecipeComment comment) {
+		return service.addComment(id, comment);
 	}
 
 	public void updateComment() {
