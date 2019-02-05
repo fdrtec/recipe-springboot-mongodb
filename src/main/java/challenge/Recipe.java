@@ -1,6 +1,7 @@
 package challenge;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -84,11 +85,12 @@ public class Recipe {
 	}
 
 	public void addIngredient(String userId) {
-		if (userId != null)
+		if (Strings.isNotBlank(userId))
 			this.likes.add(userId);
 	}
 
 	public void deleteIngredient(String userId) {
-		this.likes.remove(userId);
+		if (Strings.isNotEmpty(userId))
+			this.likes.remove(userId);
 	}
 }
