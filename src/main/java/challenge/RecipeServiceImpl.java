@@ -13,15 +13,15 @@ public class RecipeServiceImpl implements RecipeService {
     private RecipeRepository recipeRepository;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private RecipeCommentRepository commentRepository;
 
     @Override
     public Recipe save(Recipe recipe) {
 
         if (recipe.getComments().size() > 0)
-            commentRepository.saveAll(recipe.getComments());
+            commentRepository.insert(recipe.getComments());
 
-        return recipeRepository.save(recipe);
+        return recipeRepository.insert(recipe);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (!recipeAlreadyExists.isPresent())
             return null;
 
-        RecipeComment savedComment = commentRepository.save(comment);
+        RecipeComment savedComment = commentRepository.insert(comment);
 
         recipeAlreadyExists.get().addComment(savedComment);
 
@@ -104,7 +104,17 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public void updateComment(String id, String commentId, RecipeComment comment) {
+        Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
+        //refatorar
+        if (recipeAlreadyExists.isPresent()) {
+
+            comment.setId(commentId);
+
+            recipeAlreadyExists.get().updateComment(comment);
+            commentRepository.save(comment);
+            recipeRepository.save(recipeAlreadyExists.get());
+        }
     }
 
     @Override

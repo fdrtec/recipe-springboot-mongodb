@@ -3,14 +3,12 @@ package challenge;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 /**
  * Classe para mapear a receita no MongoDB
- *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Document(collection = "recipe")
@@ -95,11 +93,18 @@ public class Recipe {
 	}
 
 	public void addComment(RecipeComment comment) {
-	    if (comment != null)
-	        this.comments.add(comment);
-    }
+		if (comment != null)
+			this.comments.add(comment);
+	}
 
-    public void deleteCommentById(String commentId) {
-	    this.comments.removeIf(c -> c.getId().equals(commentId));
+	public void deleteCommentById(String commentId) {
+		this.comments.removeIf(c -> c.getId().equals(commentId));
+	}
+
+	public void updateComment(RecipeComment comment) {
+		this.comments.stream()
+				.filter(c -> c.getId().equals(comment.getId()))
+				.forEach(cc -> cc.setComment(comment.getComment()));
+
 	}
 }

@@ -55,8 +55,9 @@ public class RecipeController {
 		return service.addComment(id, comment);
 	}
 
-	public void updateComment() {
-		service.updateComment(null, null, null);
+	@PutMapping("/recipe/{id}/comment/{commentId}")
+	public void updateComment(@PathVariable("id") String id, @PathVariable("commentId") String commentId, @RequestBody RecipeComment comment ) {
+		service.updateComment(id, commentId, comment);
 	}
 
 	@DeleteMapping("/recipe/{id}/comment/{commentId}")
