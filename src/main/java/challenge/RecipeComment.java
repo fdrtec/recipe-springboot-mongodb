@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Classe para mapear o coment�rio da receita no MongoDB
  *
  */
-@Document(collection = "comment")
+//@Document(collection = "comment")
 public class RecipeComment {
 
 	@Id

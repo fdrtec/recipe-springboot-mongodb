@@ -95,8 +95,11 @@ public class Recipe {
 	}
 
 	public void addComment(RecipeComment comment) {
-
 	    if (comment != null)
 	        this.comments.add(comment);
     }
+
+    public void deleteCommentById(String commentId) {
+	    this.comments.removeIf(c -> c.getId().equals(commentId));
+	}
 }

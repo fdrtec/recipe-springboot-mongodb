@@ -59,8 +59,9 @@ public class RecipeController {
 		service.updateComment(null, null, null);
 	}
 
-	public void deleteComment() {
-		service.deleteComment(null, null);
+	@DeleteMapping("/recipe/{id}/comment/{commentId}")
+	public void deleteComment(@PathVariable("id") String id, @PathVariable("commentId") String commentId) {
+		service.deleteComment(id, commentId);
 	}
 
 }

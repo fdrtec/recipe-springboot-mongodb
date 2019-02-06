@@ -1,115 +1,122 @@
 package challenge;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
-	@Autowired
-	private RecipeRepository recipeRepository;
+    @Autowired
+    private RecipeRepository recipeRepository;
 
-	@Autowired
-	private CommentRepository commentRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
-	@Override
-	public Recipe save(Recipe recipe) {
+    @Override
+    public Recipe save(Recipe recipe) {
 
-		if (recipe.getComments().size() > 0)
-			commentRepository.saveAll(recipe.getComments());
+        if (recipe.getComments().size() > 0)
+            commentRepository.saveAll(recipe.getComments());
 
-		return recipeRepository.save(recipe);
-	}
+        return recipeRepository.save(recipe);
+    }
 
-	@Override
-	public void update(String id, Recipe recipe) {
+    @Override
+    public void update(String id, Recipe recipe) {
 
-		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+        Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
-		if (recipeAlreadyExists.isPresent()) {
+        if (recipeAlreadyExists.isPresent()) {
 
-			Recipe updatedRecipe = recipeAlreadyExists.get();
-			updatedRecipe.setTitle(recipe.getTitle());
-			updatedRecipe.setDescription(recipe.getDescription());
-			updatedRecipe.setIngredients(recipe.getIngredients());
+            Recipe updatedRecipe = recipeAlreadyExists.get();
+            updatedRecipe.setTitle(recipe.getTitle());
+            updatedRecipe.setDescription(recipe.getDescription());
+            updatedRecipe.setIngredients(recipe.getIngredients());
 
-			recipeRepository.save(updatedRecipe);
-		}
-	}
+            recipeRepository.save(updatedRecipe);
+        }
+    }
 
-	@Override
-	public void delete(String id) {
-		recipeRepository.deleteById(id);
-	}
+    @Override
+    public void delete(String id) {
+        recipeRepository.deleteById(id);
+    }
 
-	@Override
-	public Recipe get(String id) {
-		return recipeRepository.findById(id).get();
-	}
+    @Override
+    public Recipe get(String id) {
+        return recipeRepository.findById(id).get();
+    }
 
-	@Override
-	public List<Recipe> listByIngredient(String ingredient) {
-		return recipeRepository.findAllByIngredientsEqualsOrderByTitleAsc(ingredient);
-	}
+    @Override
+    public List<Recipe> listByIngredient(String ingredient) {
+        return recipeRepository.findAllByIngredientsEqualsOrderByTitleAsc(ingredient);
+    }
 
-	@Override
-	public List<Recipe> search(String search) {
-		return recipeRepository.findAllByTitleContainsOrDescriptionContainsOrderByTitleAsc(search);
-	}
+    @Override
+    public List<Recipe> search(String search) {
+        return recipeRepository.findAllByTitleContainsOrDescriptionContainsOrderByTitleAsc(search);
+    }
 
-	@Override
-	public void like(String id, String userId) {
-		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+    @Override
+    public void like(String id, String userId) {
+        Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
-		if (recipeAlreadyExists.isPresent()) {
+        if (recipeAlreadyExists.isPresent()) {
 
-			Recipe recipe = recipeAlreadyExists.get();
-			recipe.addIngredient(userId);
+            Recipe recipe = recipeAlreadyExists.get();
+            recipe.addIngredient(userId);
 
-			recipeRepository.save(recipeAlreadyExists.get());
-		}
-	}
+            recipeRepository.save(recipeAlreadyExists.get());
+        }
+    }
 
-	@Override
-	public void unlike(String id, String userId) {
-		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+    @Override
+    public void unlike(String id, String userId) {
+        Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
-		if (recipeAlreadyExists.isPresent()) {
+        if (recipeAlreadyExists.isPresent()) {
 
-			Recipe recipe = recipeAlreadyExists.get();
-			recipe.deleteIngredient(userId);
+            Recipe recipe = recipeAlreadyExists.get();
+            recipe.deleteIngredient(userId);
 
-			recipeRepository.save(recipeAlreadyExists.get());
-		}
-	}
+            recipeRepository.save(recipeAlreadyExists.get());
+        }
+    }
 
-	@Override
-	public RecipeComment addComment(String id, RecipeComment comment) {
-		Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+    @Override
+    public RecipeComment addComment(String id, RecipeComment comment) {
+        Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
 
-		if (!recipeAlreadyExists.isPresent())
-			return null;
+        if (!recipeAlreadyExists.isPresent())
+            return null;
 
-		RecipeComment savedComment = commentRepository.save(comment);
+        RecipeComment savedComment = commentRepository.save(comment);
 
-		recipeAlreadyExists.get().addComment(savedComment);
+        recipeAlreadyExists.get().addComment(savedComment);
 
-		recipeRepository.save(recipeAlreadyExists.get());
-		
-		return savedComment;
-	}
+        recipeRepository.save(recipeAlreadyExists.get());
 
-	@Override
-	public void updateComment(String id, String commentId, RecipeComment comment) {
+        return savedComment;
+    }
 
-	}
+    @Override
+    public void updateComment(String id, String commentId, RecipeComment comment) {
 
-	@Override
-	public void deleteComment(String id, String commentId) {
+    }
 
-	}
+    @Override
+    public void deleteComment(String id, String commentId) {
+        Optional<Recipe> recipeAlreadyExists = recipeRepository.findById(id);
+
+        //melhorar exclusão, ver forma de não precisar excluir nas duas collections
+        if (recipeAlreadyExists.isPresent()) {
+            recipeAlreadyExists.get().deleteCommentById(commentId);
+            commentRepository.deleteById(commentId);
+            recipeRepository.save(recipeAlreadyExists.get());
+        }
+    }
 
 }
