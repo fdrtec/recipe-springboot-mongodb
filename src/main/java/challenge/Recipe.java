@@ -83,7 +83,7 @@ public class Recipe {
 	}
 
 	public void addIngredient(String userId) {
-		if (Strings.isNotBlank(userId))
+		if (Strings.isNotEmpty(userId))
 			this.likes.add(userId);
 	}
 
