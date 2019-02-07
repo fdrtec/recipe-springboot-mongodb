@@ -59,6 +59,10 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> search(String search) {
+        return sortedSearch(search);
+    }
+
+    private List<Recipe> sortedSearch(String search) {
         return recipeRepository.findAllByTitleOrDescriptionLike(search).stream()
                 .sorted(Comparator.comparing(Recipe::getTitle))
                 .collect(Collectors.toList());
