@@ -20,7 +20,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe save(Recipe recipe) {
 
-        if (recipe.getComments().size() > 0)
+        if (recipe.getComments() != null)
             commentRepository.insert(recipe.getComments());
 
         return recipeRepository.insert(recipe);
@@ -49,7 +49,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe get(String id) {
-        return recipeRepository.findById(id).get();
+        return recipeRepository.findById(id).orElse(null);
     }
 
     @Override
