@@ -1,6 +1,7 @@
 package challenge;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,6 +11,6 @@ public interface RecipeRepository extends MongoRepository<Recipe, String> {
 
 	List<Recipe> findAllByIngredientsEqualsOrderByTitleAsc(String ingredients);
 
-	List<Recipe> findAllByTitleContainsOrDescriptionContainsOrderByTitleAsc(String search);
-
+	@Query("{'$or': [{'title': {$regex: ?0, $options: 'i'}}, {'description': {$regex: ?0, $options: 'i'} }]}")
+	List<Recipe> findAllByTitleOrDescriptionLike(String search);
 }
