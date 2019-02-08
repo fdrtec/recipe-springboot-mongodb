@@ -75,7 +75,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeAlreadyExists.isPresent()) {
 
             Recipe recipe = recipeAlreadyExists.get();
-            recipe.addIngredient(userId);
+            recipe.addLike(userId);
 
             recipeRepository.save(recipeAlreadyExists.get());
         }
@@ -88,7 +88,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeAlreadyExists.isPresent()) {
 
             Recipe recipe = recipeAlreadyExists.get();
-            recipe.deleteIngredient(userId);
+            recipe.deleteLike(userId);
 
             recipeRepository.save(recipeAlreadyExists.get());
         }

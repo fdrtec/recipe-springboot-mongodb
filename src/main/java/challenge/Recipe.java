@@ -82,12 +82,12 @@ public class Recipe {
 		this.comments = comments;
 	}
 
-	public void addIngredient(String userId) {
+	public void addLike(String userId) {
 		if (Strings.isNotEmpty(userId))
 			this.likes.add(userId);
 	}
 
-	public void deleteIngredient(String userId) {
+	public void deleteLike(String userId) {
 		if (Strings.isNotEmpty(userId))
 			this.likes.remove(userId);
 	}
